@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mystery Shopping · Metro de Madrid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;900&family=Barlow+Condensed:wght@600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:      #DA0027;
+      --red-dark: #A8001E;
+      --red-light:#FF1A3C;
+      --white:    #FFFFFF;
+      --off-white:#F5F5F5;
+      --gray-100: #EBEBEB;
+      --gray-300: #BEBEBE;
+      --gray-500: #7A7A7A;
+      --gray-700: #3D3D3D;
+      --black:    #1A1A1A;
+      --shadow:   0 2px 16px rgba(0,0,0,0.12);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Barlow', sans-serif;
+      background: var(--off-white);
+      color: var(--black);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--red);
+      color: var(--white);
+      display: flex;
+      align-items: stretch;
+      height: 64px;
+      position: relative;
+      z-index: 100;
+      box-shadow: 0 3px 12px rgba(218,0,39,0.35);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 14px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      text-decoration: none;
+    }
+
+    /* Metro diamond logo */
+    .metro-diamond {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .header-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .header-brand .name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-brand .sub {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      flex: 1;
+      gap: 10px;
+    }
+
+    .header-title .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .header-title .separator {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .header-title .module {
+      font-size: 0.8rem;
+      font-weight: 400;
+      opacity: 0.75;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      background: var(--white);
+      border-bottom: 2px solid var(--gray-100);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 56px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--gray-100);
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--white);
+    }
+
+    .input-group:focus-within {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(218,0,39,0.1);
+    }
+
+    .input-prefix {
+      padding: 0 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      background: var(--gray-100);
+      height: 36px;
+      display: flex;
+      align-items: center;
+      border-right: 1.5px solid var(--gray-300);
+      white-space: nowrap;
+    }
+
+    input[type="text"] {
+      border: none;
+      outline: none;
+      padding: 0 14px;
+      height: 36px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--black);
+      width: 140px;
+      background: transparent;
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--gray-300);
+      font-weight: 400;
+    }
+
+    .btn-filtrar {
+      height: 36px;
+      padding: 0 22px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-filtrar:hover  { background: var(--red-dark); }
+    .btn-filtrar:active { transform: scale(0.97); }
+
+    /* Status pill */
+    .status-pill {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--off-white);
+      border: 1px solid var(--gray-100);
+      border-radius: 20px;
+      font-size: 0.72rem;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 6px rgba(34,197,94,0.5);
+      animation: blink 2.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .status-pill .id-val {
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      padding: 8px 24px;
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .breadcrumb span { color: var(--gray-300); }
+    .breadcrumb strong { color: var(--red); font-weight: 600; }
+
+    /* ── REPORT AREA ── */
+    .report-area {
+      padding: 20px 24px 24px;
+      height: calc(100vh - 64px - 56px - 33px);
+      min-height: 480px;
+    }
+
+    .report-card {
+      background: var(--white);
+      border-radius: 6px;
+      border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow);
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Red top accent line */
+    .report-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+      z-index: 2;
+    }
+
+    #pbi-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── LOADING ── */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 10;
+      transition: opacity 0.3s;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      opacity: 0.15;
+    }
+
+    .spinner-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--gray-100);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-300);
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--red);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(218,0,39,0.35);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 28px;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      font-size: 0.62rem;
+      color: var(--gray-500);
+      letter-spacing: 0.5px;
+    }
+
+    footer .ft-red { color: var(--red); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-logo">
+      <!-- Metro Madrid Diamond SVG -->
+      <svg class="metro-diamond" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="32" height="32" rx="4" fill="white"/>
+        <path d="M20 8L32 20L20 32L8 20Z" fill="#DA0027"/>
+        <text x="20" y="24" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" font-size="11" fill="white">M</text>
+      </svg>
+      <div class="header-brand">
+        <span class="name">Metro de Madrid</span>
+        <span class="sub">Sistema de Gestión</span>
+      </div>
+    </div>
+    <div class="header-title">
+      <span class="label">Mystery Shopping</span>
+      <div class="separator"></div>
+      <span class="module">Visor de Cuestionarios</span>
+    </div>
+  </header>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <span class="toolbar-label">Buscar registro</span>
+    <div class="toolbar-divider"></div>
+
+    <div class="input-group">
+      <span class="input-prefix">CLAVE ID</span>
+      <input type="text" id="clave-input" placeholder="Ej: 16937" value="16937"/>
+    </div>
+
+    <button class="btn-filtrar" onclick="applyFilter()">Cargar</button>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span>Mostrando ID:</span>
+      <span class="id-val" id="status-id">16937</span>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    Metro de Madrid
+    <span>›</span>
+    Mystery Shopping
+    <span>›</span>
+    IRT — Información en Trenes
+    <span>›</span>
+    <strong id="breadcrumb-id">ID 16937</strong>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report-area">
+    <div class="report-card">
+      <div class="loading-overlay" id="loading">
+        <svg class="loading-logo" width="60" height="60" viewBox="0 0 40 40">
+          <rect x="4" y="4" width="32" height="32" rx="4" fill="#DA0027"/>
+          <path d="M20 8L32 20L20 32L8 20Z" fill="white" opacity="0.3"/>
+          <text x="20" y="24" text-anchor="middle" font-family="Barlow Condensed" font-weight="900" font-size="11" fill="white">M</text>
+        </svg>
+        <div class="spinner-wrap">
+          <div class="spinner"></div>
+          <span class="loading-text">Cargando informe…</span>
+        </div>
+      </div>
+      <iframe
+        id="pbi-frame"
+        allowfullscreen="true"
+        title="Mystery Shopping IRT">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© Metro de Madrid</span>
+    <span>·</span>
+    <span class="ft-red">Mystery Shopping</span>
+    <span>·</span>
+    <span>Uso interno — Datos confidenciales</span>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    const BASE_URL  = "https://app.powerbi.com/reportEmbed";
+    const REPORT_ID = "bf12eaf1-b845-4419-ba0f-eac18385f246";
+    const GROUP_ID  = "83b96d00-0bbf-44ba-8c8a-0931bd9993d0";
+    const TABLE_COL = "IRT/CLAVEID";
+
+    function buildUrl(claveId) {
+      const filter = `${TABLE_COL} eq '${claveId}'`;
+      return `${BASE_URL}?filter=${encodeURIComponent(filter)}&reportId=${REPORT_ID}&groupId=${GROUP_ID}&autoAuth=true&filterPaneEnabled=false&navContentPaneEnabled=false`;
+    }
+
+    function applyFilter() {
+      const claveId = document.getElementById("clave-input").value.trim();
+      if (!claveId) { showToast("Introduce un CLAVE ID"); return; }
+
+      document.getElementById("status-id").textContent = claveId;
+      document.getElementById("breadcrumb-id").textContent = `ID ${claveId}`;
+      showLoading(true);
+
+      document.getElementById("pbi-frame").src = buildUrl(claveId);
+    }
+
+    function showLoading(on) {
+      document.getElementById("loading").classList.toggle("hidden", !on);
+    }
+
+    document.getElementById("pbi-frame").addEventListener("load", () => showLoading(false));
+
+    document.getElementById("clave-input").addEventListener("keydown", e => {
+      if (e.key === "Enter") applyFilter();
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2500);
+    }
+
+    // Leer claveid desde URL (?claveid=16937)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramId = urlParams.get("claveid");
+    if (paramId) {
+      document.getElementById("clave-input").value = paramId;
+    }
+
+    applyFilter();
+  </script>
+</body>
+</html>
