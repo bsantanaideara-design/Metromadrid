@@ -8,458 +8,240 @@
 <style>
   :root {
     --rojo: #DA291C;
-    --rojo-oscuro: #a81e13;
     --azul: #003DA5;
-    --azul-claro: #0057C8;
     --gris-oscuro: #1a1a2e;
-    --gris-medio: #2d2d44;
-    --gris-claro: #f4f4f8;
     --blanco: #ffffff;
-    --texto: #1a1a2e;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
+  html, body {
+    height: 100%;
     font-family: 'DM Sans', sans-serif;
     background: var(--gris-oscuro);
     color: var(--blanco);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  /* ── HEADER ── */
   header {
     background: var(--blanco);
     padding: 0 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    height: 68px;
     border-bottom: 4px solid var(--rojo);
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-  }
-
-  /* Metro logo SVG inline */
-  .metro-logo {
-    width: 52px;
-    height: 52px;
     flex-shrink: 0;
   }
 
+  .logo-area { display: flex; align-items: center; gap: 1.2rem; }
+
+  .metro-logo { width: 48px; height: 48px; flex-shrink: 0; }
+
   .brand-text h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: var(--rojo);
     letter-spacing: 2px;
     line-height: 1;
   }
 
   .brand-text p {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: #666;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     font-weight: 500;
   }
 
-  .header-badge {
-    background: var(--rojo);
+  .tipo-badge {
+    background: var(--azul);
     color: white;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
+    padding: 0.3rem 0.9rem;
     border-radius: 20px;
+    display: none;
   }
 
-  /* ── CONTROL BAR ── */
-  .control-bar {
-    background: var(--gris-medio);
-    padding: 1.2rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .control-bar label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    white-space: nowrap;
-  }
-
-  .input-wrapper {
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.07);
-    border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-
-  .input-wrapper:focus-within {
-    border-color: var(--rojo);
-    box-shadow: 0 0 0 3px rgba(218,41,28,0.15);
-  }
-
-  .input-wrapper input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--blanco);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.55rem 1rem;
-    width: 160px;
-  }
-
-  .input-wrapper input::placeholder {
-    color: rgba(255,255,255,0.3);
-  }
-
-  /* Report selector */
-  .select-wrapper {
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.07);
-    border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-
-  .select-wrapper:focus-within {
-    border-color: var(--azul-claro);
-    box-shadow: 0 0 0 3px rgba(0,87,200,0.2);
-  }
-
-  .select-wrapper select {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--blanco);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    padding: 0.55rem 1rem;
-    min-width: 220px;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-
-  .select-wrapper select option {
-    background: var(--gris-medio);
-    color: var(--blanco);
-  }
-
-  .select-icon {
-    padding-right: 0.8rem;
-    color: rgba(255,255,255,0.4);
-    pointer-events: none;
-  }
-
-  .btn-cargar {
-    background: var(--rojo);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1.4rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    white-space: nowrap;
-  }
-
-  .btn-cargar:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
-  .btn-cargar:active { transform: translateY(0); }
-
-  .btn-cargar svg { width: 16px; height: 16px; }
-
-  /* ── STATUS BAR ── */
   .status-bar {
     background: rgba(0,61,165,0.25);
-    padding: 0.5rem 2rem;
+    padding: 0.45rem 2rem;
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.78rem;
+    font-size: 0.77rem;
     color: rgba(255,255,255,0.55);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    min-height: 34px;
+    flex-shrink: 0;
   }
 
   .status-dot {
-    width: 7px;
-    height: 7px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: #aaa;
     flex-shrink: 0;
     transition: background 0.3s;
   }
-
-  .status-dot.active { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
   .status-dot.loading { background: #facc15; animation: pulse 1s infinite; }
+  .status-dot.ok      { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+  .status-dot.error   { background: #f87171; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  #report-iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    background: white;
+    display: none;
   }
 
-  #status-text { transition: all 0.3s; }
-
-  /* ── IFRAME AREA ── */
-  .report-container {
+  .error-screen {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    min-height: 0;
-  }
-
-  .placeholder {
-    flex: 1;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.2rem;
-    color: rgba(255,255,255,0.2);
-    padding: 3rem;
+    gap: 1rem;
+    color: rgba(255,255,255,0.35);
     text-align: center;
+    padding: 2rem;
   }
 
-  .placeholder svg {
-    width: 72px;
-    height: 72px;
-    opacity: 0.15;
+  .error-screen svg { width: 56px; height: 56px; opacity: 0.2; }
+
+  .error-screen h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
   }
 
-  .placeholder p {
-    font-size: 0.9rem;
-    max-width: 320px;
-    line-height: 1.6;
+  .error-screen p { font-size: 0.85rem; max-width: 340px; line-height: 1.6; }
+
+  .error-screen code {
+    background: rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    color: #facc15;
   }
 
-  #report-iframe {
-    width: 100%;
-    flex: 1;
-    border: none;
-    display: none;
-    background: white;
-    min-height: calc(100vh - 160px);
-  }
-
-  /* ── FOOTER ── */
   footer {
     background: #111122;
-    padding: 0.7rem 2rem;
+    padding: 0.55rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.25);
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  footer span { letter-spacing: 0.5px; }
-
-  @media (max-width: 640px) {
-    .control-bar { gap: 0.8rem; }
-    .select-wrapper select { min-width: 160px; }
-    header { padding: 0 1rem; }
-    .brand-text h1 { font-size: 1.3rem; }
-    footer { flex-direction: column; gap: 0.3rem; text-align: center; }
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.22);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-shrink: 0;
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo-area">
-    <!-- Metro de Madrid logo (diamond M) -->
     <svg class="metro-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <rect width="100" height="100" rx="12" fill="#DA291C"/>
-      <text x="50" y="68" font-family="Arial Black, sans-serif" font-size="62" font-weight="900"
-            fill="white" text-anchor="middle" dominant-baseline="auto">M</text>
+      <text x="50" y="68" font-family="Arial Black,sans-serif" font-size="62" font-weight="900"
+            fill="white" text-anchor="middle">M</text>
     </svg>
     <div class="brand-text">
       <h1>Metro de Madrid</h1>
       <p>Mystery Shopping · Visor de Informes</p>
     </div>
   </div>
-  <span class="header-badge">Power BI Embed</span>
+  <span class="tipo-badge" id="tipo-badge"></span>
 </header>
 
-<!-- CONTROL BAR -->
-<div class="control-bar">
-  <label for="report-select">Cuadro de mando</label>
-  <div class="select-wrapper">
-    <select id="report-select">
-      <option value="LE_CE">CE – Cliente Externo (LE_CE_Datos)</option>
-      <option value="CT">CT – Coches de Tren</option>
-      <option value="LT">LT – Línea de Tren</option>
-      <option value="VIG">VIG – Vigilancia</option>
-    </select>
-    <span class="select-icon">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-        <path d="M6 8L1 3h10z"/>
-      </svg>
-    </span>
-  </div>
-
-  <label for="titulo-input">ID / Título</label>
-  <div class="input-wrapper">
-    <input type="text" id="titulo-input" placeholder="Ej: 10334" maxlength="20"/>
-  </div>
-
-  <button class="btn-cargar" onclick="cargarInforme()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    Cargar informe
-  </button>
-</div>
-
-<!-- STATUS BAR -->
 <div class="status-bar">
-  <span class="status-dot" id="status-dot"></span>
-  <span id="status-text">Selecciona un cuadro de mando e introduce un ID para comenzar.</span>
+  <span class="status-dot loading" id="status-dot"></span>
+  <span id="status-text">Iniciando…</span>
 </div>
 
-<!-- REPORT AREA -->
-<div class="report-container" id="report-container">
-  <div class="placeholder" id="placeholder">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <rect x="3" y="3" width="18" height="18" rx="2"/>
-      <path d="M3 9h18M9 21V9"/>
-    </svg>
-    <p>El informe aparecerá aquí una vez selecciones el cuadro de mando y el ID del título.</p>
-  </div>
-  <iframe id="report-iframe" allowfullscreen></iframe>
+<iframe id="report-iframe" allowfullscreen></iframe>
+
+<div class="error-screen" id="error-screen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 8v4M12 16h.01"/>
+  </svg>
+  <h2>Parámetros incorrectos</h2>
+  <p id="error-msg"></p>
+  <p>Formato esperado:<br><code>index.html?tipo=CE&amp;id=10334</code></p>
+  <p>Tipos válidos: <code>CE</code> · <code>CT</code> · <code>LT</code> · <code>VIG</code></p>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span>Metro de Madrid · Mystery Shopping Dashboard</span>
-  <span id="current-url-display"></span>
+  <span id="footer-info"></span>
 </footer>
 
 <script>
   const REPORTS = {
-    LE_CE: {
-      reportId: '745f3223-0df8-4943-a0bd-0b61d43c1916',
-      groupId:  '83b96d00-0bbf-44ba-8c8a-0931bd9993d0',
-      table:    'LE_CE_Datos',
-      field:    'TITULO'
-    },
-    CT: {
-      reportId: '63c4d082-a5ce-4db2-8576-afd7af0968a3',
-      groupId:  '83b96d00-0bbf-44ba-8c8a-0931bd9993d0',
-      table:    'CT',
-      field:    'TITULO'
-    },
-    LT: {
-      reportId: '40919cd6-ac26-4077-828f-d2dc850bc8c5',
-      groupId:  '83b96d00-0bbf-44ba-8c8a-0931bd9993d0',
-      table:    'LT',
-      field:    'Título'
-    },
-    VIG: {
-      reportId: '2ff905d4-9850-41f1-bb3b-ae98b5eedd73',
-      groupId:  '83b96d00-0bbf-44ba-8c8a-0931bd9993d0',
-      table:    'VIG_SinAgrupar',
-      field:    'TITULO'
-    }
+    CE:  { label:'CE – Cliente Externo',  reportId:'745f3223-0df8-4943-a0bd-0b61d43c1916', groupId:'83b96d00-0bbf-44ba-8c8a-0931bd9993d0', table:'LE_CE_Datos',   field:'TITULO'  },
+    CT:  { label:'CT – Coches de Tren',   reportId:'63c4d082-a5ce-4db2-8576-afd7af0968a3', groupId:'83b96d00-0bbf-44ba-8c8a-0931bd9993d0', table:'CT',            field:'TITULO'  },
+    LT:  { label:'LT – Línea de Tren',    reportId:'40919cd6-ac26-4077-828f-d2dc850bc8c5', groupId:'83b96d00-0bbf-44ba-8c8a-0931bd9993d0', table:'LT',            field:'Título'  },
+    VIG: { label:'VIG – Vigilancia',      reportId:'2ff905d4-9850-41f1-bb3b-ae98b5eedd73', groupId:'83b96d00-0bbf-44ba-8c8a-0931bd9993d0', table:'VIG_SinAgrupar',field:'TITULO'  }
   };
 
-  // Allow pressing Enter on input
-  document.getElementById('titulo-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') cargarInforme();
-  });
+  function setStatus(state, msg) {
+    document.getElementById('status-dot').className = 'status-dot ' + state;
+    document.getElementById('status-text').textContent = msg;
+  }
 
-  // Auto-load from URL params: ?tipo=CE&id=10334
-  window.addEventListener('DOMContentLoaded', function() {
-    const params = new URLSearchParams(window.location.search);
-    const tipo = (params.get('tipo') || '').toUpperCase();
-    const id   = params.get('id') || '';
+  function showError(msg) {
+    document.getElementById('error-msg').textContent = msg;
+    document.getElementById('error-screen').style.display = 'flex';
+    setStatus('error', 'Error: ' + msg);
+  }
 
-    if (tipo && REPORTS[tipo]) {
-      document.getElementById('report-select').value = tipo;
-    }
-    if (id) {
-      document.getElementById('titulo-input').value = id;
-    }
-    if (tipo && REPORTS[tipo] && id) {
-      cargarInforme();
-    }
-  });
+  var params = new URLSearchParams(window.location.search);
+  var tipo   = (params.get('tipo') || '').toUpperCase();
+  var id     = (params.get('id')   || '').trim();
 
-  function cargarInforme() {
-    const key    = document.getElementById('report-select').value;
-    const titulo = document.getElementById('titulo-input').value.trim();
-    const dot    = document.getElementById('status-dot');
-    const statusText = document.getElementById('status-text');
+  if (!tipo || !id) {
+    showError('Faltan parámetros tipo e id en la URL.');
+  } else if (!REPORTS[tipo]) {
+    showError('Tipo "' + tipo + '" no reconocido. Usa CE, CT, LT o VIG.');
+  } else {
+    var cfg = REPORTS[tipo];
 
-    if (!titulo) {
-      statusText.textContent = '⚠️  Introduce un ID de título antes de cargar.';
-      dot.className = 'status-dot';
-      return;
-    }
+    var badge = document.getElementById('tipo-badge');
+    badge.textContent = cfg.label;
+    badge.style.display = 'inline-block';
 
-    const cfg = REPORTS[key];
-    const filterStr = `${cfg.table}/${cfg.field} eq '${titulo}'`;
-    const encodedFilter = encodeURIComponent(filterStr);
+    document.getElementById('footer-info').textContent =
+      cfg.table + '/' + cfg.field + " = '" + id + "'";
 
-    const url = `https://app.powerbi.com/reportEmbed?filter=${encodedFilter}`
-              + `&reportId=${cfg.reportId}`
-              + `&groupId=${cfg.groupId}`
-              + `&autoAuth=true`
-              + `&filterPaneEnabled=false`
-              + `&navContentPaneEnabled=false`;
+    var filterStr     = cfg.table + '/' + cfg.field + " eq '" + id + "'";
+    var encodedFilter = encodeURIComponent(filterStr);
+    var url = 'https://app.powerbi.com/reportEmbed'
+            + '?filter='   + encodedFilter
+            + '&reportId=' + cfg.reportId
+            + '&groupId='  + cfg.groupId
+            + '&autoAuth=true'
+            + '&filterPaneEnabled=false'
+            + '&navContentPaneEnabled=false';
 
-    dot.className = 'status-dot loading';
-    statusText.textContent = `Cargando ${cfg.table} · ID: ${titulo} …`;
+    setStatus('loading', 'Cargando ' + cfg.label + ' · ID: ' + id + ' …');
 
-    const iframe = document.getElementById('report-iframe');
-    const placeholder = document.getElementById('placeholder');
+    var iframe = document.getElementById('report-iframe');
+    iframe.style.display = 'block';
 
     iframe.onload = function() {
-      dot.className = 'status-dot active';
-      statusText.textContent = `✓ Informe cargado · ${cfg.table} · ID: ${titulo}`;
+      setStatus('ok', '✓ Informe cargado · ' + cfg.label + ' · ID: ' + id);
     };
 
     iframe.src = url;
-    iframe.style.display = 'block';
-    placeholder.style.display = 'none';
-
-    // Show shortened URL in footer
-    document.getElementById('current-url-display').textContent =
-      `${cfg.table}/${cfg.field} = '${titulo}'`;
   }
 </script>
 </body>
